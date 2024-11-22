@@ -10,8 +10,9 @@ const usersRouter = require("./controllers/users.js");
 const profilesRouter = require("./controllers/profiles.js");
 
 mongoose.connect(process.env.MONGODB_URI);
+const db = mongoose.connection;
 
-mongoose.connection.on("connected", () => {
+db.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
@@ -25,3 +26,5 @@ app.use("/profiles", profilesRouter);
 app.listen(3000, () => {
   console.log("The express app is ready!");
 });
+
+module.exports = db;
